@@ -50,8 +50,7 @@ class ViT(nn.Module):
 
         self.emb_dropout = nn.Dropout(dropout)
 
-        #self.cls_token = nn.Parameter(torch.randn(1, 1, dim))
-        self.pos_emb1D = nn.Parameter(torch.randn(tokens, dim)).cuda(0) # It is a tensor so we need to specify cuda device here
+        self.cls_token = nn.Parameter(torch.randn(1, 1, dim))
 
         self.transformer = TransformerEncoder(dim, blocks=blocks, heads=heads,
                                               dim_head=self.dim_head,
@@ -64,6 +63,7 @@ class ViT(nn.Module):
         if self.split_gpus:
             self.emb_dropout.cuda(0)
             self.project_patches.cuda(0)
+            self.pos_emb1D.cuda(0)
 
 
 
